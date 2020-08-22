@@ -23,7 +23,7 @@ t_lemin *ft_init_lemin(void)
 	//int			start;
 	//int 		end;
     lemin->links = NULL;
-	//int			bfs_level;
+	lemin->max_bfs = 0;
 	//t_path		*paths;
 	//t_location	*locations;
 	//t_ant		*ants;

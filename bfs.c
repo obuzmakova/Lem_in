@@ -79,7 +79,7 @@ void    bfs(t_lemin *lemin)
         if (head->room != lemin->end)
         {
             add_neighb(lemin, &tail, head->room);
-            // ? lem_in->bfs_level = head->room->bfs_level;
+            lemin->max_bfs = head->room->bfs_lvl; // max bfs?
         }
         else
             lemin->end->bfs_lvl = 2147483647;

@@ -21,7 +21,7 @@ typedef struct			s_link
 	t_room				*start;
 	t_room				*end;
 	struct s_link		*next;
-	struct s_link		*prev;
+	struct s_link		*prev; // пока не использовалось?
 }						t_link;
 
 typedef struct  s_lemin
@@ -33,7 +33,7 @@ typedef struct  s_lemin
 	//int			start;
 	//int 		end;
 	t_link		*links;
-	//int			bfs_level;
+	int			max_bfs;
 	//t_path		*paths;
 	//t_location	*locations;
 	//t_ant		*ants;
@@ -70,5 +70,20 @@ t_tail  *create_el_tail(t_room *room);
 void    add_el_tail(t_tail **tail, t_tail *el);
 t_tail  *head_tail(t_tail **tail);
 void    add_neighb(t_lemin *lemin, t_tail **tail, t_room *room);
+void    del_waste_links(t_lemin *lemin);
+void    del_link(t_lemin *lemin, t_link *link);
+void    get_direct(t_lemin *lemin);
+void    swap_rooms(t_room **start, t_room **end);
+void    count_links(t_lemin *lemin);
+void    del_deadlock(t_lemin *lemin);
+void    del_waste_inp_lin(t_lemin *lemin);
+void    del_inp(t_lemin *lemin, t_room *room);
+int     find_div_way(t_lemin *lemin, t_link *link);
+t_link	*search_link(t_lemin *lemin, t_room *start, t_room *end);
+void    del_second_inp(t_lemin *lemin, t_link *link);
+void    del_waste_out_lin(t_lemin *lemin);
+void    del_out(t_lemin *lemin, t_room *room);
+int     len_way(t_lemin *lemin, t_link *link, int len);
+void    del_second_out(t_lemin *lemin, t_link *link);
 
 #endif

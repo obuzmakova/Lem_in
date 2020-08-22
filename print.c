@@ -15,12 +15,13 @@ void    ft_print_room(t_lemin *lemin) // добавить печать коор�
     while ((tmp))
     {
         printf("%s ", tmp->name);
-        printf("bfs_lvl %d\n", tmp->bfs_lvl); // проверка bfs, потом убрать
+        printf("bfs_lvl %d ", tmp->bfs_lvl); // проверка bfs, потом убрать
+        printf("inp %d out %d\n", tmp->inp_lin, tmp->out_lin); // проверка, потом убрать
         tmp = tmp -> next;
     }
 }
 
-void    ft_print_links(t_lemin *lemin)
+void    ft_print_links(t_lemin *lemin) // не печатает удаленные ссылки, создать копию ссылок для печати в самом начале 
 {
     t_link  *tmp;
 
