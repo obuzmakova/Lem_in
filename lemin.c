@@ -3,8 +3,9 @@
 int main(void)
 {
     t_lemin *lemin;
+    t_line  str;
 
-    lemin = ft_parser();
+    lemin = ft_parser(&str);
     bfs(lemin); // какая-то валидация на результаты bfs
     del_waste_links(lemin);
     get_direct(lemin);
@@ -12,8 +13,8 @@ int main(void)
     del_deadlock(lemin);
     del_waste_inp_lin(lemin);
     del_waste_out_lin(lemin);
-    // распечатка карты, добавить структуры со всеми строками 
-
-    ft_print(lemin);
+    ways(lemin);
+    ft_print(lemin, str);
+    launch_ant(lemin);
     return (0);
 }

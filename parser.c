@@ -20,33 +20,50 @@ t_lemin *ft_init_lemin(void)
 	lemin->rooms = NULL;
     lemin->start = NULL;
 	lemin->end = NULL;
-	//int			start;
-	//int 		end;
+	lemin->ant_st = 0;
+	lemin->ant_end = 0;
     lemin->links = NULL;
 	lemin->max_bfs = 0;
-	//t_path		*paths;
-	//t_location	*locations;
-	//t_ant		*ants;
+    lemin->ways = NULL;
+	lemin->steps = NULL;
+    //t_ant		*ants;
 	lemin->line = NULL;
-    lemin->fd = open("/Users/roman/Desktop/lemin/mini_map.txt", O_RDONLY); // потом убрать
+    lemin->fd = 0;
+    //lemin->fd = open("/Users/roman/Desktop/lemin/map.txt", O_RDONLY); // потом убрать
     return(lemin);
 }
 
-void ft_parse_ants(t_lemin *lemin)
+void ft_parse_ants(t_lemin *lemin, t_line *tmp_str)
 {
     char    *line;
 
     get_next_line(lemin->fd, &line); // почистить и валидировать
-    lemin->ant_num = ft_atoi(line);
+    //lemin->ant_num = ft_atoi(line); // ???
+    lemin->ant_st = ft_atoi(line); 
+    tmp_str->cont = line;
+    tmp_str->next = NULL;
+    //ft_add_str(tmp_str, line);
 }
 
-void ft_parse_rooms(t_lemin *lemin)
+void    ft_add_str(t_line *str, char *line)
+{
+    t_line *new_str;
+
+    while(str && str->next)
+        str = str->next;
+    str->next = (t_line *)ft_memalloc(sizeof(t_line)); // проверить на выделение памяти
+    str->next->cont = line;
+    str->next->next = NULL;
+}
+
+void ft_parse_rooms(t_lemin *lemin, t_line *tmp_str)
 {
     char    *line;
     int     type; // 1 - start, 2 - middle, 3 - end, 0 - невалидный случай
     t_room  *room;
 
     get_next_line(lemin->fd, &line); // почистить и валидировать
+    ft_add_str(tmp_str, line);
     type = 2;
     while (line && (ft_is_cmt(line) || ft_is_cmd(line)
     || ft_is_room(line)))
@@ -60,19 +77,22 @@ void ft_parse_rooms(t_lemin *lemin)
             type = 2;
         } // добавить валидацию по типу
         get_next_line(lemin->fd, &line);
+        ft_add_str(tmp_str, line);
     }
     lemin->line = ft_strdup(line); // проверить на выделение памяти?
 }
 
-t_lemin *ft_parser()
+t_lemin *ft_parser(t_line  *str)
 {
     t_lemin *lemin;
+    t_line  *tmp_str;    
 
+    tmp_str = str;
     lemin = ft_init_lemin();
-    ft_parse_ants(lemin);
-    ft_parse_rooms(lemin);
+    ft_parse_ants(lemin, tmp_str);
+    ft_parse_rooms(lemin, tmp_str);
     // валидация по наличию start и end комнаты
-    ft_parse_lin(lemin);
+    ft_parse_lin(lemin, tmp_str);
     // валидация по наличию связей
     return(lemin);
 }

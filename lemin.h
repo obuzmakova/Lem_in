@@ -16,6 +16,19 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
+typedef struct			s_step
+{
+	int					ant_num;
+	t_room				*room;
+	struct s_step		*next;
+}						t_step;
+
+typedef struct		s_line
+{
+	char			*cont;
+	struct s_line	*next;
+}					t_line;
+
 typedef struct			s_link
 {
 	t_room				*start;
@@ -24,21 +37,29 @@ typedef struct			s_link
 	struct s_link		*prev; // пока не использовалось?
 }						t_link;
 
+typedef struct			s_way
+{
+	t_link				*link;
+	int					len;
+	struct s_way		*next;
+}						t_way;
+
 typedef struct  s_lemin
 {
 	int         ant_num;
 	t_room		*rooms;
     t_room		*start;
 	t_room		*end;
-	//int			start;
-	//int 		end;
+	int			ant_st;
+	int 		ant_end;
 	t_link		*links;
 	int			max_bfs;
-	//t_path		*paths;
-	//t_location	*locations;
 	//t_ant		*ants;
+	t_step		*steps;
+	t_way		*ways;
 	char		*line; // последняя сгнленная строка
 	int			fd;
+	t_line		*str; // хранятся все строки карты
 }						t_lemin;
 
 typedef struct			s_tail
@@ -47,22 +68,22 @@ typedef struct			s_tail
 	struct s_tail		*next;
 }						t_tail;
 
-t_lemin *ft_parser();
+t_lemin *ft_parser(t_line *tmp_str);
 t_lemin *ft_init_lemin(void);
-void	ft_parse_ants(t_lemin *lemin);
-void	ft_parse_rooms(t_lemin *lemin);
+void	ft_parse_ants(t_lemin *lemin, t_line *tmp_str);
+void	ft_parse_rooms(t_lemin *lemin, t_line *tmp_str);
 int		ft_is_cmt(char *line);
 int		ft_is_cmd(char *line);
 int		ft_is_room(char *line);
 t_room	*ft_room(char *line, int type);
 void	ft_addroom(t_lemin *lemin, t_room *room);
-void    ft_parse_lin(t_lemin *lemin);
+void    ft_parse_lin(t_lemin *lemin, t_line *tmp_str);
 t_room	*ft_search(t_lemin *lemin, char *name);
 t_link  *ft_init_link(t_room *start, t_room *end);
 void	ft_add_link(t_lemin *lemin, t_link *link);
 int		ft_len_arr(char **arr);
 int		ft_is_plint(char *str);
-void    ft_print(t_lemin *lemin);
+void    ft_print(t_lemin *lemin, t_line str);
 void    ft_print_room(t_lemin *lemin);
 void    ft_print_links(t_lemin *lemin);
 void    bfs(t_lemin *lemin);
@@ -85,5 +106,18 @@ void    del_waste_out_lin(t_lemin *lemin);
 void    del_out(t_lemin *lemin, t_room *room);
 int     len_way(t_lemin *lemin, t_link *link, int len);
 void    del_second_out(t_lemin *lemin, t_link *link);
+void    ways(t_lemin *lemin);
+t_way	*create_way(void);
+void    add_link(t_way *way, t_link *link);
+void    add_way(t_lemin *lemin, t_way *way);
+void	del_one_link(t_lemin *lemin, t_link *link);
+void    ft_add_str(t_line *str, char *line);
+t_step  *create_step(int ant_num, t_room *room);
+void    add_step(t_lemin *lemin, t_step *step);
+void    move_in_way (t_lemin *lemin, t_way *way);
+void    launch_ant(t_lemin  *lemin);
+void    move_from_start(t_lemin *lemin, t_way *way);
+int     calc(t_lemin *lemin, t_way *way);
+void    ft_print_step(t_lemin *lemin);
 
 #endif
