@@ -61,7 +61,7 @@ t_link  *ft_link(t_lemin *lemin, char *line)
     return (NULL); // возможно нужна какая-то валидация?
 }
 
-void    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
+int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
 {
     char    *line;
     t_link  *link;
@@ -78,4 +78,5 @@ void    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
         get_next_line(lemin->fd, &line);
         ft_add_str(tmp_str, line);
     }
+    return(1);
 }

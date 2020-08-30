@@ -9,12 +9,9 @@ int     ft_type(char *line)
     return (0); // добавить какую-нибудь валидацию? на 0?
 }
 
-t_lemin *ft_init_lemin(void)
+int ft_init_lemin(t_lemin *lemin)
 {
-    t_lemin *lemin;
-
-    if (!(lemin = (t_lemin *)ft_memalloc(sizeof(t_lemin)))) // проверить на выделение памяти
-        return (0); // выйти и почистить память
+    //lemin = tmp_lemin;
     lemin->ant_num = 0;
     lemin->line = NULL;
 	lemin->rooms = NULL;
@@ -30,19 +27,24 @@ t_lemin *ft_init_lemin(void)
 	lemin->line = NULL;
     lemin->fd = 0;
     //lemin->fd = open("/Users/roman/Desktop/lemin/map.txt", O_RDONLY); // потом убрать
-    return(lemin);
+    return(1);
 }
 
-void ft_parse_ants(t_lemin *lemin, t_line *tmp_str)
+int ft_parse_ants(t_lemin *lemin, t_line *tmp_str)
 {
     char    *line;
 
-    get_next_line(lemin->fd, &line); // почистить и валидировать
+    if (get_next_line(lemin->fd, &line) != 1)
+        return (0);
     //lemin->ant_num = ft_atoi(line); // ???
-    lemin->ant_st = ft_atoi(line); 
+    lemin->ant_st = ft_atoi(line);
+    if (lemin->ant_st <= 0)
+        exit(1);
     tmp_str->cont = line;
     tmp_str->next = NULL;
-    //ft_add_str(tmp_str, line);
+    ft_strdel(&line);
+    return (1);
+    //ft_add_str(tmp_str, line); // ???
 }
 
 void    ft_add_str(t_line *str, char *line)
@@ -56,13 +58,14 @@ void    ft_add_str(t_line *str, char *line)
     str->next->next = NULL;
 }
 
-void ft_parse_rooms(t_lemin *lemin, t_line *tmp_str)
+int ft_parse_rooms(t_lemin *lemin, t_line *tmp_str)
 {
     char    *line;
     int     type; // 1 - start, 2 - middle, 3 - end, 0 - невалидный случай
     t_room  *room;
 
-    get_next_line(lemin->fd, &line); // почистить и валидировать
+    if (get_next_line(lemin->fd, &line) != 1)
+        return (0);
     ft_add_str(tmp_str, line);
     type = 2;
     while (line && (ft_is_cmt(line) || ft_is_cmd(line)
@@ -80,19 +83,21 @@ void ft_parse_rooms(t_lemin *lemin, t_line *tmp_str)
         ft_add_str(tmp_str, line);
     }
     lemin->line = ft_strdup(line); // проверить на выделение памяти?
+    ft_strdel(&line);
+    return (1);
 }
 
-t_lemin *ft_parser(t_line  *str)
+int ft_parser(t_lemin *lemin, t_line *str)
 {
-    t_lemin *lemin;
-    t_line  *tmp_str;    
-
-    tmp_str = str;
-    lemin = ft_init_lemin();
-    ft_parse_ants(lemin, tmp_str);
-    ft_parse_rooms(lemin, tmp_str);
+    if (!ft_init_lemin(lemin))
+        return (0);
+    if (!ft_parse_ants(lemin, str))
+        return (0);
+    if (!ft_parse_rooms(lemin, str))
+        return (0);
     // валидация по наличию start и end комнаты
-    ft_parse_lin(lemin, tmp_str);
+    if (!ft_parse_lin(lemin, str))
+        return (0);
     // валидация по наличию связей
-    return(lemin);
+    return (1);
 }

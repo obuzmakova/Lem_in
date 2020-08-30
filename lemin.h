@@ -68,16 +68,16 @@ typedef struct			s_tail
 	struct s_tail		*next;
 }						t_tail;
 
-t_lemin *ft_parser(t_line *tmp_str);
-t_lemin *ft_init_lemin(void);
-void	ft_parse_ants(t_lemin *lemin, t_line *tmp_str);
-void	ft_parse_rooms(t_lemin *lemin, t_line *tmp_str);
+int ft_parser(t_lemin *lemin, t_line *str);
+int ft_init_lemin(t_lemin *lemin);
+int ft_parse_ants(t_lemin *lemin, t_line *tmp_str);
+int	ft_parse_rooms(t_lemin *lemin, t_line *tmp_str);
 int		ft_is_cmt(char *line);
 int		ft_is_cmd(char *line);
 int		ft_is_room(char *line);
 t_room	*ft_room(char *line, int type);
 void	ft_addroom(t_lemin *lemin, t_room *room);
-void    ft_parse_lin(t_lemin *lemin, t_line *tmp_str);
+int   ft_parse_lin(t_lemin *lemin, t_line *tmp_str);
 t_room	*ft_search(t_lemin *lemin, char *name);
 t_link  *ft_init_link(t_room *start, t_room *end);
 void	ft_add_link(t_lemin *lemin, t_link *link);
