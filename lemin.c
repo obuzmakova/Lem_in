@@ -31,6 +31,5 @@ int main(void)
     ways(lemin);
     ft_print(lemin, *str);
     launch_ant(lemin);
-    sleep(1000);
     return (0);
 }
