@@ -74,7 +74,7 @@ int ft_parse_rooms(t_lemin *lemin, t_line *tmp_str)
             type = ft_type(line); // добавить какую-нибудь валидацию? на 0? НОЛЬ В КАЧЕСТВЕ ЧЕГО?
         else if (ft_is_room(line))
         {
-            room = ft_room(line, type); // добавить валидацию комнаты А ИМЕННО? ВРОДЕ ВСЕ ОК
+            room = ft_room(line, type); // добавить валидацию комнаты А ИМЕННО? ВРОДЕ ВСЕ ОК ТЕПЕРЬ?
             ft_addroom(lemin, room);
             type = 2;
         } // добавить валидацию по типу ТОЖЕ НЕ ПОНЯЛА
@@ -110,6 +110,6 @@ int ft_parser(t_lemin *lemin, t_line *str)
         ft_error();
     if (!ft_parse_lin(lemin, str))
         ft_error();
-    // валидация по наличию связей
+    // валидация по наличию связей ЧЕКНИ, ПЛИЗ, СДЕЛАЛА ЛИ Я ТО ЧТО ТЫ ИМЕЛА ТУТ ВВИДУ
     return (1);
 }

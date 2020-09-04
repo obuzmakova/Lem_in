@@ -41,7 +41,7 @@ int main(void)
         exit(1);
     if (!ft_parser(lemin, str))
         ft_error();
-    bfs(lemin); // какая-то валидация на результаты bfs
+    bfs(lemin); // какая-то валидация на результаты bfs НЕ ДЕЛАЛА. ЧТО НАДО?
     del_waste_links(lemin);
     get_direct(lemin);
     count_links(lemin);

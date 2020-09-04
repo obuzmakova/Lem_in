@@ -31,8 +31,8 @@ int ft_is_room(char *line)
 	{
         if (tab[0] && ft_strlen(tab[0]))
         {
-            if (tab[0][0] != '#' && ft_is_plint_2(tab[1])
-			&& ft_is_plint_2(tab[2]))
+            if (tab[0][0] != '#' && ft_is_plint(tab[1])
+			&& ft_is_plint(tab[2]))
             {
                 free_all(tab);
                 return (1);

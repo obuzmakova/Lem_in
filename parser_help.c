@@ -13,25 +13,13 @@ int	ft_len_arr(char **arr)
 	return (i);
 }
 
-int ft_is_plint_2(char *str)
-{
-    int num;
-    if (str && ft_strlen(str) >= 1)
-    {
-        num = ft_atoi(str);
-        if (num >= -2147483647 && num <= 2147483647)
-            return (1);
-    }
-    return (0);
-}
-
 int ft_is_plint(char *str)
 {
     int num;
     if (str && ft_strlen(str) >= 1)
     {
         num = ft_atoi(str);
-        if (num >= 0 && num <= 2147483647)
+        if (num >= -2147483647 && num <= 2147483647)
             return (1);
     }
     return (0);

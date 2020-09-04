@@ -4,7 +4,8 @@ t_step  *create_step(int ant_num, t_room *room)
 {
     t_step  *step;
 
-    step = (t_step *)ft_memalloc(sizeof(t_step)); // проверить на выделение памяти
+    if (!(step = (t_step *)ft_memalloc(sizeof(t_step))))
+        exit(1);
     step->ant_num = ant_num;
     step->room = room;
     step->next = NULL;

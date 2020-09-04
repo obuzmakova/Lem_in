@@ -50,7 +50,8 @@ t_way	*create_way(void)
 {
 	t_way	*way;
 
-	way = (t_way *)ft_memalloc(sizeof(t_way)); // проверить на ввыделение памяти
+	if (!(way = (t_way *)ft_memalloc(sizeof(t_way))))
+	    exit(1);
 	way->link = NULL;
 	way->len = 0;
 	way->next= NULL;

@@ -21,7 +21,7 @@ int     len_way(t_lemin *lemin, t_link *link, int len)
 {
 	if (link->end == lemin->end)
 		return (len + 1);
-	//if (link->end->inp_lin > 1) // не до конца понятно зачем 2 ифа
+	//if (link->end->inp_lin > 1) // не до конца понятно зачем 2 ифа ЭТО НЕ МОЙ КОММЕНТ?
 	//	return (len + 1);
 	return (len_way(lemin, search_link(lemin, link->end, NULL), len + 1));    
 }

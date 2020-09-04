@@ -91,6 +91,32 @@ int check_all(t_lemin *lemin)
     return (1);
 }
 
+int check_dupl(t_lemin *lemin)
+{
+    t_room *tmp;
+    int start;
+    int end;
+
+    start = -1;
+    end = -1;
+    tmp = lemin->rooms;
+    while (tmp)
+    {
+        if (tmp->type == 1)
+            start++;
+        if (tmp->type == 3)
+            end++;
+        if (tmp->type == 2 && (!ft_strcmp(tmp->name, lemin->start->name) ||
+                !ft_strcmp(tmp->name, lemin->end->name)))
+            return (0);
+        tmp = tmp->next;
+    }
+    if (start == 0 && end == 0)
+        return (1);
+    else
+        return (0);
+}
+
 int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
 {
     char    *line;
@@ -109,7 +135,9 @@ int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
         get_next_line(lemin->fd, &line);
         ft_add_str(tmp_str, line);
     }
-    if (!(check_all(lemin)))
+    if (!check_all(lemin))
+        return (0);
+    if (!check_dupl(lemin))
         return (0);
     return(1);
 }
