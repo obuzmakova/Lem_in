@@ -68,6 +68,9 @@ typedef struct			s_tail
 	struct s_tail		*next;
 }						t_tail;
 
+void ft_error();
+void free_all(char **str);
+int ft_is_plint_2(char *str);
 int ft_parser(t_lemin *lemin, t_line *str);
 int ft_init_lemin(t_lemin *lemin);
 int ft_parse_ants(t_lemin *lemin, t_line *tmp_str);

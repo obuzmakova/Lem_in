@@ -1,13 +1,33 @@
 #include "lemin.h"
 
-int ft_error(t_lemin *lemin, t_line *str)
+void free_all(char **str)
+{
+    int i;
+
+    i = -1;
+    if (str && str[0])
+    {
+        while (str[++i])
+            ;
+        while(--i >= 0)
+        {
+            free(str[i]);
+            str[i] = NULL;
+        }
+        free(str);
+        str = NULL;
+    }
+    else if (str)
+    {
+        free(str);
+        str = NULL;
+    }
+}
+
+void ft_error()
 {
     write(1, "ERROR\n", 6);
-    if (lemin)
-    {
-        //
-    }
-    return (0);
+    exit(1);
 }
 
 int main(void)
@@ -20,7 +40,7 @@ int main(void)
     if (!(lemin = (t_lemin*)ft_memalloc(sizeof(t_lemin))))
         exit(1);
     if (!ft_parser(lemin, str))
-        return (ft_error(lemin, str));
+        ft_error();
     bfs(lemin); // какая-то валидация на результаты bfs
     del_waste_links(lemin);
     get_direct(lemin);

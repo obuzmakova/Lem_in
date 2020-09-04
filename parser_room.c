@@ -26,18 +26,19 @@ int ft_is_room(char *line)
 {
     char	**tab;
 
-	if (!(tab = ft_strsplit(line, ' '))) // невалидный случай
-		return (0);
+	tab = ft_strsplit(line, ' ');
 	if (ft_len_arr(tab) == 3)
 	{
         if (tab[0] && ft_strlen(tab[0]))
         {
-            if (tab[0][0] != '#' && ft_is_plint(tab[1])
-			&& ft_is_plint(tab[2])) // зафришить tab
+            if (tab[0][0] != '#' && ft_is_plint_2(tab[1])
+			&& ft_is_plint_2(tab[2]))
+            {
+                free_all(tab);
                 return (1);
+            }
         }
 	}
-	// зафришить tab
 	return (0);
 }
 
@@ -46,9 +47,12 @@ t_room *ft_room(char *line, int type)
     char    **tab;
 	t_room	*room;
 
-    tab = ft_strsplit(line, ' '); // зафришить
-    room = (t_room *)ft_memalloc(sizeof(t_room)); // проверить на выделение памяти
-    room->name = ft_strdup(tab[0]); // проверить на выделение памяти?
+    tab = ft_strsplit(line, ' ');
+    if (!(room = (t_room *)ft_memalloc(sizeof(t_room))))
+        exit(1);
+    if (!(room->name = ft_strdup(tab[0])))
+        exit(1);
+    free_all(tab);
     room->type = type;
     room->bfs_lvl = -1;
     room->inp_lin = 0;

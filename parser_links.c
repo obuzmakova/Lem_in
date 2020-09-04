@@ -19,7 +19,8 @@ t_link  *ft_init_link(t_room *start, t_room *end)
 {
 	t_link	*link;
 
-	link = (t_link *)ft_memalloc(sizeof(t_link)); // проверить на выделение памяти
+	if (!(link = (t_link *)ft_memalloc(sizeof(t_link))))
+	    exit(1);
 	link->start = start;
 	link->end = end;
 	link->next = NULL;
@@ -50,15 +51,44 @@ t_link  *ft_link(t_lemin *lemin, char *line)
 	t_room	*end_room;
 
     hyphen = ft_strchr(line, '-');
-    st_name = ft_strsub(line, 0, ft_strlen(line) - ft_strlen(hyphen)); // проверить на выделение памяти
-    end_name = ft_strsub(line, ft_strlen(line) - ft_strlen(hyphen) + 1,  ft_strlen(hyphen) - 1); // проверить на выделение памяти
-    start_room = ft_search(lemin, st_name);
-	end_room = ft_search(lemin, end_name);
+    if (!(st_name = ft_strsub(line, 0, ft_strlen(line) - ft_strlen(hyphen))))
+        exit(1);
+    if (!(end_name = ft_strsub(line, ft_strlen(line) - ft_strlen(hyphen) + 1,  ft_strlen(hyphen) - 1)))
+        exit(1);
+    if (!(start_room = ft_search(lemin, st_name)))
+        return (NULL);
+	if (!(end_room = ft_search(lemin, end_name)))
+	    return (NULL);
     free(st_name);
 	free(end_name);
-    if (start_room && end_room)
-		return (ft_init_link(start_room, end_room));
-    return (NULL); // возможно нужна какая-то валидация?
+    return (ft_init_link(start_room, end_room));
+}
+
+int check_all(t_lemin *lemin)
+{
+    t_link *tmp_link;
+    t_room *tmp_room;
+
+    tmp_link = lemin->links;
+    tmp_room = lemin->rooms;
+    while(tmp_room)
+    {
+        while(tmp_link)
+        {
+            if (!(ft_strcmp(tmp_room->name, tmp_link->start->name)) ||
+            !(ft_strcmp(tmp_room->name, tmp_link->end->name)))
+                break;
+            else
+            {
+                if (tmp_link->next == NULL)
+                    return (0);
+                tmp_link = tmp_link->next;
+            }
+        }
+        tmp_room = tmp_room->next;
+        tmp_link = lemin->links;
+    }
+    return (1);
 }
 
 int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
@@ -71,12 +101,15 @@ int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
     {
         if (!ft_is_cmt(line) && ft_strlen(line) >= 1)
         {
-            link = ft_link(lemin, line); // какая-то валидация?
+            if (!(link = ft_link(lemin, line)))
+                return (0);
             ft_add_link(lemin, link);
-            // валидация связи
+            // валидация связи КАКАЯ ИМЕННО ПРЕДПОЛАГАЛАСЬ?
         }
         get_next_line(lemin->fd, &line);
         ft_add_str(tmp_str, line);
     }
+    if (!(check_all(lemin)))
+        return (0);
     return(1);
 }

@@ -4,7 +4,8 @@ t_tail  *create_el_tail(t_room *room)
 {
     t_tail  *tmp;
 
-    tmp = (t_tail *)ft_memalloc(sizeof(t_tail)); // проверить на выделение памяти
+    if (!(tmp = (t_tail *)ft_memalloc(sizeof(t_tail))))
+        exit(1);
     tmp->room = room;
     tmp->next = NULL;
     return(tmp);
