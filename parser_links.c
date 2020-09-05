@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 void	ft_add_link(t_lemin *lemin, t_link *link)
 {

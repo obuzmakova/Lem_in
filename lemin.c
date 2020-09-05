@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 void free_all(char **str)
 {

@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 int     ft_type(char *line)
 {

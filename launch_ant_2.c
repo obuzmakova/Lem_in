@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 void    move_from_start(t_lemin *lemin, t_way *way)
 {
@@ -38,8 +38,12 @@ void    ft_print_step(t_lemin *lemin)
     tmp = lemin->steps;
     while (tmp)
     {
-        printf("L%d-%s ", tmp->ant_num, tmp->room->name);
+        write(1, "L", 1);
+        ft_putnbr(tmp->ant_num);
+        write(1, "-", 1);
+        ft_putstr(tmp->room->name);
+        write(1, " ", 1);
         tmp = tmp->next;
     }
-    printf("\n");
+    write(1, "\n", 1);
 }

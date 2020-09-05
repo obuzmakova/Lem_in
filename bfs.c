@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 t_tail  *create_el_tail(t_room *room)
 {

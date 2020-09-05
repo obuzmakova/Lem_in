@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 t_step  *create_step(int ant_num, t_room *room)
 {
@@ -36,7 +36,7 @@ void    add_step(t_lemin *lemin, t_step *step) // ???
 		lemin->steps = step;
 }
 
-void    move_in_way (t_lemin *lemin, t_way *way)
+void    move_in_way(t_lemin *lemin, t_way *way)
 {
     t_link  *tmp;
 

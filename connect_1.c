@@ -1,4 +1,4 @@
-#include "lemin.h"
+#include "./include/lemin.h"
 
 void    del_link(t_lemin *lemin, t_link *link)
 {
