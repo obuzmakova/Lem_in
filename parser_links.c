@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_links.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 16:57:57 by mleticia          #+#    #+#             */
+/*   Updated: 2020/09/06 16:58:01 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./include/lemin.h"
 
 void	ft_add_link(t_lemin *lemin, t_link *link)
@@ -51,10 +63,12 @@ t_link  *ft_link(t_lemin *lemin, char *line)
 	t_room	*end_room;
 
     hyphen = ft_strchr(line, '-');
+    if (hyphen == NULL)
+        ft_error(lemin);
     if (!(st_name = ft_strsub(line, 0, ft_strlen(line) - ft_strlen(hyphen))))
-        exit(1);
+        ft_error(lemin);
     if (!(end_name = ft_strsub(line, ft_strlen(line) - ft_strlen(hyphen) + 1,  ft_strlen(hyphen) - 1)))
-        exit(1);
+        ft_error(lemin);
     if (!(start_room = ft_search(lemin, st_name)))
         return (NULL);
 	if (!(end_room = ft_search(lemin, end_name)))
@@ -125,7 +139,7 @@ int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
     line = ft_strdup(lemin->line);
     while (line)
     {
-        if (!ft_is_cmt(line) && ft_strlen(line) >= 1)
+        if (!ft_is_cmt(line, lemin) && ft_strlen(line) >= 1)
         {
             if (!(link = ft_link(lemin, line)))
                 return (0);

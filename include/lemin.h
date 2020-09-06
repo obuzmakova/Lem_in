@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lemin.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 16:53:23 by mleticia          #+#    #+#             */
+/*   Updated: 2020/09/06 16:53:25 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
@@ -67,13 +79,13 @@ typedef struct			s_tail
 	struct s_tail		*next;
 }						t_tail;
 
-void ft_error();
 void free_all(char **str);
+void ft_error(t_lemin *lemin);
 int ft_parser(t_lemin *lemin, t_line *str);
 int ft_init_lemin(t_lemin *lemin);
 int ft_parse_ants(t_lemin *lemin, t_line *tmp_str);
 int	ft_parse_rooms(t_lemin *lemin, t_line *tmp_str);
-int		ft_is_cmt(char *line);
+int ft_is_cmt(char *line, t_lemin *lemin);
 int		ft_is_cmd(char *line);
 int		ft_is_room(char *line);
 t_room	*ft_room(char *line, int type);

@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_room.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 16:58:22 by mleticia          #+#    #+#             */
+/*   Updated: 2020/09/06 16:58:25 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./include/lemin.h"
 
-int ft_is_cmt(char *line)
+int ft_is_cmt(char *line, t_lemin *lemin)
 {
     if (line)
 	{
-		if (ft_strlen(line) && !ft_is_cmd(line)
-			&& !ft_strncmp(line, "#", 1))
+    	if (!ft_strlen(line))
+    		ft_error(lemin);
+		if (!ft_is_cmd(line) && !ft_strncmp(line, "#", 1))
 			return (1);
 	}
 	return (0);
@@ -31,8 +44,8 @@ int ft_is_room(char *line)
 	{
         if (tab[0] && ft_strlen(tab[0]))
         {
-            if (tab[0][0] != '#' && ft_is_plint(tab[1])
-			&& ft_is_plint(tab[2]))
+            if (tab[0][0] != '#' && tab[0][0] != 'L' &&
+            ft_is_plint(tab[1]) && ft_is_plint(tab[2]))
             {
                 free_all(tab);
                 return (1);

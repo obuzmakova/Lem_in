@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   connect_1.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 16:50:57 by mleticia          #+#    #+#             */
+/*   Updated: 2020/09/06 16:51:03 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./include/lemin.h"
 
 void    del_link(t_lemin *lemin, t_link *link)
@@ -35,7 +47,7 @@ void    del_waste_links(t_lemin *lemin)
         tmp = tmp->next;
         if (del->start->bfs_lvl == -1 || del->end->bfs_lvl == -1
         || del->start->bfs_lvl == del->end->bfs_lvl)
-            del_link(lemin, del);
+        	del_link(lemin, del);
     }
 }
 
@@ -51,14 +63,20 @@ void    swap_rooms(t_room **start, t_room **end)
 void    get_direct(t_lemin *lemin)
 {
     t_link  *tmp;
+    int i;
 
+    i = -1;
     tmp = lemin->links;
     while (tmp)
     {
         if (tmp->start->bfs_lvl > tmp->end->bfs_lvl)
             swap_rooms(&tmp->start, &tmp->end);
+        if (tmp->start->bfs_lvl == 2147483647 || tmp->end->bfs_lvl == 2147483647)
+            i++;
         tmp = tmp->next;
     }
+    if (i == -1)
+        ft_error(lemin);
 }
 
 void    count_links(t_lemin *lemin)

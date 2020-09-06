@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lemin.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleticia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/06 16:54:18 by mleticia          #+#    #+#             */
+/*   Updated: 2020/09/06 16:57:06 by mleticia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./include/lemin.h"
 
 void free_all(char **str)
@@ -24,9 +36,10 @@ void free_all(char **str)
     }
 }
 
-void ft_error()
+void ft_error(t_lemin *lemin)
 {
     write(1, "ERROR\n", 6);
+    //ТУТ БУДУ ФРИШИТЬ
     exit(1);
 }
 
@@ -40,7 +53,7 @@ int main(void)
     if (!(lemin = (t_lemin*)ft_memalloc(sizeof(t_lemin))))
         exit(1);
     if (!ft_parser(lemin, str))
-        ft_error();
+        ft_error(lemin);
     bfs(lemin); // какая-то валидация на результаты bfs НЕ ДЕЛАЛА. ЧТО НАДО?
     del_waste_links(lemin);
     get_direct(lemin);
