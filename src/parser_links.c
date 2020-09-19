@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "./include/lemin.h"
 
 void	ft_add_link(t_lemin *lemin, t_link *link)
 {
@@ -136,18 +136,22 @@ int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
     char    *line;
     t_link  *link;
 
-    line = ft_strdup(lemin->line);
+    line = ft_strdup(lemin->line); // Я НЕ ЗНАЮ КАК ЭТО ПОЧИСТИТЬ (Н)
     while (line)
     {
         if (!ft_is_cmt(line, lemin) && ft_strlen(line) >= 1)
         {
             if (!(link = ft_link(lemin, line)))
                 return (0);
-            ft_add_link(lemin, link);
+			ft_add_link(lemin, link);
             // валидация связи КАКАЯ ИМЕННО ПРЕДПОЛАГАЛАСЬ?
         }
+		//if (line)
+		//	free(line);
         get_next_line(lemin->fd, &line);
         ft_add_str(tmp_str, line);
+		//if (line)
+		//	free(line);
     }
     if (!check_all(lemin))
         return (0);

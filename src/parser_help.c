@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "./include/lemin.h"
 
 int	ft_len_arr(char **arr)
 {

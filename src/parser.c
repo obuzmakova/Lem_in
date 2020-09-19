@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "./include/lemin.h"
 
 int     ft_type(char *line)
 {
@@ -37,7 +37,7 @@ int ft_init_lemin(t_lemin *lemin)
 	//t_ant		*ants;
 	lemin->line = NULL;
 	lemin->fd = 0;
-	//lemin->fd = open("/Users/roman/Desktop/lemin/map.txt", O_RDONLY); // потом убрать
+	lemin->fd = open("/Users/romannezgovorov/Desktop/Lem_in/maps/our_old_maps/mini_map.txt", O_RDONLY); // потом убрать
 	return(1);
 }
 
@@ -96,7 +96,7 @@ int ft_parse_rooms(t_lemin *lemin, t_line *tmp_str)
 		exit(1);
 	if (!ft_strchr(line, '-'))
 		ft_error(lemin);
-	ft_strdel(&line);
+	//ft_strdel(&line);
 	return (1);
 }
 

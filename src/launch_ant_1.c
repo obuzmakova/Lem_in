@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "./include/lemin.h"
 
 t_step  *create_step(int ant_num, t_room *room)
 {
@@ -94,7 +94,7 @@ void    launch_ant(t_lemin  *lemin)
             tmp2 = tmp2->next; 
         }
         ft_print_step(lemin);
-        // зафришить step
+		free_steps(&(lemin->steps));
         lemin->steps = NULL;
     }
 }

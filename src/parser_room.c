@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "./include/lemin.h"
 
 int ft_is_cmt(char *line, t_lemin *lemin)
 {
@@ -52,6 +52,7 @@ int ft_is_room(char *line)
             }
         }
 	}
+	free_all(tab);
 	return (0);
 }
 
