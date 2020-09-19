@@ -70,7 +70,7 @@ typedef struct  s_lemin
 	t_way		*ways;
 	char		*line; // последняя сгнленная строка
 	int			fd;
-	t_line		*str; // хранятся все строки карты
+	//t_line		*str; // хранятся все строки карты
 }						t_lemin;
 
 typedef struct			s_tail
@@ -79,6 +79,11 @@ typedef struct			s_tail
 	struct s_tail		*next;
 }						t_tail;
 
+void	free_ways(t_way	**ways);
+void	free_rooms(t_room	**rooms);
+void	free_links(t_link	**links);
+void	free_steps(t_step	**steps);
+void	free_str(t_line	**str);
 void free_all(char **str);
 void ft_error(t_lemin *lemin);
 int ft_parser(t_lemin *lemin, t_line *str);
@@ -130,5 +135,6 @@ void    launch_ant(t_lemin  *lemin);
 void    move_from_start(t_lemin *lemin, t_way *way);
 int     calc(t_lemin *lemin, t_way *way);
 void    ft_print_step(t_lemin *lemin);
+void	free_lemin(t_lemin **lemin);
 
 #endif
