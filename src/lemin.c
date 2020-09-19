@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void free_all(char **str)
 {
@@ -40,6 +40,7 @@ void ft_error(t_lemin *lemin)
 {
     write(1, "ERROR\n", 6);
     //ТУТ БУДУ ФРИШИТЬ
+
     exit(1);
 }
 
