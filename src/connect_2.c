@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void    del_deadlock(t_lemin *lemin)
 {

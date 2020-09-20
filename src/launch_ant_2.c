@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void    move_from_start(t_lemin *lemin, t_way *way)
 {

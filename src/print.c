@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void    ft_print_ways(t_lemin *lemin) // не печатает удаленные ссылки, создать копию ссылок для печати в самом начале 
 {
@@ -34,25 +34,22 @@ void    ft_print_ways(t_lemin *lemin) // не печатает удаленны�
     write(1, "\n", 1);
 }
 
-void    ft_print_str(t_line str)
+void    ft_print_str(t_line *str)
 {
-    while (str.cont)
+    while (str->cont)
     {
-        ft_putstr(str.cont);
+        ft_putstr(str->cont);
         write(1, "\n", 1);
         //if (str.next)
-            str = *str.next;
+            str = str->next;
         //else
         //    break;
     }
     write(1, "\n", 1);
 }
 
-void    ft_print(t_lemin *lemin, t_line str) // добавить печать комманд и комментариев
-{                                // поменять на наш принтф
-    //printf("%d\n", lemin->ant_num);
-    //ft_print_room(lemin);
-   // ft_print_links(lemin);
-    //ft_print_ways(lemin); //ТУТ МОЖНО ПО ПРИКОЛУ ПОСМОТРЕТЬ ПУТИ КОТОРЫЕ СОЗДАЛИСЬ
-    ft_print_str(str);
+void    ft_print(t_lemin *lemin) 
+{
+    //ft_print_ways(lemin); ТУТ МОЖНО ПО ПРИКОЛУ ПОСМОТРЕТЬ ПУТИ КОТОРЫЕ СОЗДАЛИСЬ
+    ft_print_str(lemin->str);
 }

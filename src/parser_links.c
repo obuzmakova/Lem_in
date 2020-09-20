@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void	ft_add_link(t_lemin *lemin, t_link *link)
 {
@@ -131,13 +131,21 @@ int check_dupl(t_lemin *lemin)
         return (0);
 }
 
-int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
+int    ft_parse_lin(t_lemin *lemin)
 {
     char    *line;
     t_link  *link;
 
-    line = ft_strdup(lemin->line); // Я НЕ ЗНАЮ КАК ЭТО ПОЧИСТИТЬ (Н)
-    while (line)
+    if (!ft_is_cmt(lemin->line, lemin) && ft_strlen(lemin->line) >= 1)
+        {
+            if (!(link = ft_link(lemin, lemin->line)))
+                return (0);
+			ft_add_link(lemin, link);
+            // валидация связи КАКАЯ ИМЕННО ПРЕДПОЛАГАЛАСЬ?
+        }
+        get_next_line(lemin->fd, &line);
+        ft_add_str(lemin->str, line);
+	while (line)
     {
         if (!ft_is_cmt(line, lemin) && ft_strlen(line) >= 1)
         {
@@ -146,12 +154,8 @@ int    ft_parse_lin(t_lemin *lemin, t_line *tmp_str)
 			ft_add_link(lemin, link);
             // валидация связи КАКАЯ ИМЕННО ПРЕДПОЛАГАЛАСЬ?
         }
-		//if (line)
-		//	free(line);
         get_next_line(lemin->fd, &line);
-        ft_add_str(tmp_str, line);
-		//if (line)
-		//	free(line);
+        ft_add_str(lemin->str, line);
     }
     if (!check_all(lemin))
         return (0);

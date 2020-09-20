@@ -70,7 +70,7 @@ typedef struct  s_lemin
 	t_way		*ways;
 	char		*line; // последняя сгнленная строка
 	int			fd;
-	//t_line		*str; // хранятся все строки карты
+	t_line		*str; // хранятся все строки карты
 }						t_lemin;
 
 typedef struct			s_tail
@@ -86,22 +86,22 @@ void	free_steps(t_step	**steps);
 void	free_str(t_line	**str);
 void free_all(char **str);
 void ft_error(t_lemin *lemin);
-int ft_parser(t_lemin *lemin, t_line *str);
+int ft_parser(t_lemin *lemin);
 int ft_init_lemin(t_lemin *lemin);
-int ft_parse_ants(t_lemin *lemin, t_line *tmp_str);
-int	ft_parse_rooms(t_lemin *lemin, t_line *tmp_str);
+int ft_parse_ants(t_lemin *lemin);
+int	ft_parse_rooms(t_lemin *lemin);
 int ft_is_cmt(char *line, t_lemin *lemin);
 int		ft_is_cmd(char *line);
 int		ft_is_room(char *line);
 t_room	*ft_room(char *line, int type);
 void	ft_addroom(t_lemin *lemin, t_room *room);
-int   ft_parse_lin(t_lemin *lemin, t_line *tmp_str);
+int   ft_parse_lin(t_lemin *lemin);
 t_room	*ft_search(t_lemin *lemin, char *name);
 t_link  *ft_init_link(t_room *start, t_room *end);
 void	ft_add_link(t_lemin *lemin, t_link *link);
 int		ft_len_arr(char **arr);
 int		ft_is_plint(char *str);
-void    ft_print(t_lemin *lemin, t_line str);
+void    ft_print(t_lemin *lemin);
 void    bfs(t_lemin *lemin);
 t_tail  *create_el_tail(t_room *room);
 void    add_el_tail(t_tail **tail, t_tail *el);

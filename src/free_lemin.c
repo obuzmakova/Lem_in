@@ -1,4 +1,4 @@
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void	free_steps(t_step	**steps)
 {
@@ -88,6 +88,7 @@ void	free_lemin(t_lemin **lemin)
 		free_rooms(&((*lemin)->rooms));
 		if (&((*lemin)->line))
 			free(((*lemin)->line)); //???
+		free_str(&((*lemin)->str));
 		free((*lemin));
 		(*lemin) = NULL;
 	}

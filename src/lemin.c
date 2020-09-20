@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/lemin.h"
+#include "lemin.h"
 
 void free_all(char **str)
 {
@@ -41,20 +41,19 @@ void ft_error(t_lemin *lemin)
     write(1, "ERROR\n", 6);
     //ТУТ БУДУ ФРИШИТЬ
 	free_lemin(&lemin); //ПРОВЕРЬ КАК ОНО ТУТ РАБОТАЕТ (Н)
-	//free_str(&str); НАДО ЕЩЕ ЭТО КАК_ТО ЗАФРИШИТЬ (Н)
     exit(1);
 }
 
 int main(void)
 {
     t_lemin *lemin;
-    t_line  *str;
+    //t_line  *str;
 
-    if (!(str = (t_line*)ft_memalloc(sizeof(t_line))))
-        exit(1);
+    //if (!(str = (t_line*)ft_memalloc(sizeof(t_line))))
+    //    exit(1);
     if (!(lemin = (t_lemin*)ft_memalloc(sizeof(t_lemin))))
         exit(1);
-    if (!ft_parser(lemin, str))
+    if (!ft_parser(lemin))
 	    ft_error(lemin);
 	bfs(lemin); // какая-то валидация на результаты bfs НЕ ДЕЛАЛА. ЧТО НАДО?
     del_waste_links(lemin);
@@ -64,9 +63,8 @@ int main(void)
     del_waste_inp_lin(lemin);
     del_waste_out_lin(lemin);
     ways(lemin);
-    ft_print(lemin, *str);
+    ft_print(lemin);
     launch_ant(lemin);
 	free_lemin(&lemin);
-	free_str(&str);
     return (0);
 }
