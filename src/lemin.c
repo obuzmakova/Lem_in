@@ -41,7 +41,9 @@ void ft_error(t_lemin *lemin)
     write(1, "ERROR\n", 6);
     //ТУТ БУДУ ФРИШИТЬ
 	free_lemin(&lemin); //ПРОВЕРЬ КАК ОНО ТУТ РАБОТАЕТ (Н)
-    exit(1);
+    //	sleep(1000);
+
+	exit(1);
 }
 
 int main(void)
@@ -53,7 +55,7 @@ int main(void)
     //    exit(1);
     if (!(lemin = (t_lemin*)ft_memalloc(sizeof(t_lemin))))
         exit(1);
-    if (!ft_parser(lemin))
+    if (!ft_parser(lemin)) //?
 	    ft_error(lemin);
 	bfs(lemin); // какая-то валидация на результаты bfs НЕ ДЕЛАЛА. ЧТО НАДО?
     del_waste_links(lemin);
@@ -66,5 +68,6 @@ int main(void)
     ft_print(lemin);
     launch_ant(lemin);
 	free_lemin(&lemin);
+//	sleep(1000);
     return (0);
 }

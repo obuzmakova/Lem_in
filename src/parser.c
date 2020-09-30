@@ -37,7 +37,7 @@ int ft_init_lemin(t_lemin *lemin)
 	//t_ant		*ants;
 	lemin->line = NULL;
 	lemin->fd = 0;
-	lemin->fd = open("/Users/romannezgovorov/Desktop/Lem_in/maps/our_old_maps/mini_map.txt", O_RDONLY); // потом убрать
+	lemin->fd = open("/Users/romannezgovorov/Desktop/lemin_3009/Lem_in/maps/our_old_maps/mini_map.txt", O_RDONLY); // потом убрать
 	lemin->str = NULL;
 	return(1);
 }
@@ -47,14 +47,23 @@ int ft_parse_ants(t_lemin *lemin)
 	char    *line;
 
 	if (get_next_line(lemin->fd, &line) != 1)
-		exit(1);
+		return(0);
 	lemin->ant_st = ft_atoi(line);
 	if (lemin->ant_st <= 0)
+	{
+		ft_strdel(&line);
 		return (0);
+	}
 	if (!(lemin->str = (t_line*)ft_memalloc(sizeof(t_line))))
-    	exit(1);
+    	{
+		ft_strdel(&line);
+		return (0);
+	}
 	if (!(lemin->str->cont = ft_strdup(line)))
-		exit(1);
+	{
+		ft_strdel(&line);
+		return (0);
+	}
 	lemin->str->next = NULL;
 	ft_strdel(&line);
 	return (1);
@@ -78,7 +87,7 @@ int ft_parse_rooms(t_lemin *lemin)
 	t_room  *room;
 
 	if (get_next_line(lemin->fd, &line) != 1)
-		exit(1);
+		return(0);
 	ft_add_str(lemin->str, line);
 	type = 2;
 	while (line && (ft_is_cmt(line, lemin) || ft_is_cmd(line) || ft_is_room(line)))
@@ -91,13 +100,14 @@ int ft_parse_rooms(t_lemin *lemin)
 			ft_addroom(lemin, room);
 			type = 2;
 		} // добавить валидацию по типу ТОЖЕ НЕ ПОНЯЛА
-		get_next_line(lemin->fd, &line);
+		if (get_next_line(lemin->fd, &line) != 1)
+			return(0);
 		ft_add_str(lemin->str, line);
 	}
 	if (!(lemin->line = ft_strdup(line)))
-		exit(1);
+		return(0);
 	if (!ft_strchr(line, '-'))
-		ft_error(lemin);
+		return(0);
 	//ft_strdel(&line);
 	return (1);
 }

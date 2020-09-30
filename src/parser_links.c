@@ -143,7 +143,8 @@ int    ft_parse_lin(t_lemin *lemin)
 			ft_add_link(lemin, link);
             // валидация связи КАКАЯ ИМЕННО ПРЕДПОЛАГАЛАСЬ?
         }
-        get_next_line(lemin->fd, &line);
+        if (get_next_line(lemin->fd, &line) != 1)
+			return(0);
         ft_add_str(lemin->str, line);
 	while (line)
     {

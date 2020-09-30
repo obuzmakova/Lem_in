@@ -12,7 +12,6 @@
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-
 # include "../libft/libft.h"
 #include <fcntl.h> // потом убрать?
 
@@ -33,6 +32,7 @@ typedef struct			s_step
 	t_room				*room;
 	struct s_step		*next;
 }						t_step;
+
 
 typedef struct		s_line
 {
