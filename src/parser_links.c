@@ -62,20 +62,28 @@ t_link  *ft_link(t_lemin *lemin, char *line)
 	t_room	*start_room;
 	t_room	*end_room;
 
-    hyphen = ft_strchr(line, '-');
-    if (hyphen == NULL)
-        ft_error(lemin);
-    if (!(st_name = ft_strsub(line, 0, ft_strlen(line) - ft_strlen(hyphen))))
-        ft_error(lemin);
-    if (!(end_name = ft_strsub(line, ft_strlen(line) - ft_strlen(hyphen) + 1,  ft_strlen(hyphen) - 1)))
-        ft_error(lemin);
-    if (!(start_room = ft_search(lemin, st_name)))
-        return (NULL);
+	hyphen = ft_strchr(line, '-');
+	if (hyphen == NULL)
+		ft_error(lemin);
+	if (!(st_name = ft_strsub(line, 0, ft_strlen(line) - ft_strlen(hyphen))))
+		ft_error(lemin);
+	if (!(end_name = ft_strsub(line, ft_strlen(line) - ft_strlen(hyphen) + 1,  ft_strlen(hyphen) - 1)))
+		ft_error(lemin);
+	if (!(start_room = ft_search(lemin, st_name)))
+	{
+		ft_strdel(&st_name);
+		ft_strdel(&end_name);
+		return (NULL);
+	}
 	if (!(end_room = ft_search(lemin, end_name)))
-	    return (NULL);
-    free(st_name);
-	free(end_name);
-    return (ft_init_link(start_room, end_room));
+	{
+		ft_strdel(&st_name);
+		ft_strdel(&end_name);
+		return (NULL);
+	}
+	ft_strdel(&st_name);
+	ft_strdel(&end_name);
+	return (ft_init_link(start_room, end_room));
 }
 
 int check_all(t_lemin *lemin)
@@ -151,7 +159,10 @@ int    ft_parse_lin(t_lemin *lemin)
         if (!ft_is_cmt(line, lemin) && ft_strlen(line) >= 1)
         {
             if (!(link = ft_link(lemin, line)))
-                return (0);
+            {
+				//ft_strdel(&line);
+				return (0);
+			}
 			ft_add_link(lemin, link);
             // валидация связи КАКАЯ ИМЕННО ПРЕДПОЛАГАЛАСЬ?
         }

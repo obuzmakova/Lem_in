@@ -36,13 +36,21 @@ void free_all(char **str)
     }
 }
 
+/*void ft_error_with_line(t_lemin *lemin, char *line)
+{
+	write(1, "ERROR\n", 6);
+
+	free_lemin(&lemin); //ПРОВЕРЬ КАК ОНО ТУТ РАБОТАЕТ (Н)
+	//sleep(10000);
+	exit(1);
+}*/
+
 void ft_error(t_lemin *lemin)
 {
     write(1, "ERROR\n", 6);
     //ТУТ БУДУ ФРИШИТЬ
 	free_lemin(&lemin); //ПРОВЕРЬ КАК ОНО ТУТ РАБОТАЕТ (Н)
-    //	sleep(1000);
-
+    //sleep(10000);
 	exit(1);
 }
 
@@ -68,6 +76,5 @@ int main(void)
     ft_print(lemin);
     launch_ant(lemin);
 	free_lemin(&lemin);
-//	sleep(1000);
     return (0);
 }

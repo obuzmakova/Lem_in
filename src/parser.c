@@ -37,18 +37,50 @@ int ft_init_lemin(t_lemin *lemin)
 	//t_ant		*ants;
 	lemin->line = NULL;
 	lemin->fd = 0;
-	lemin->fd = open("/Users/romannezgovorov/Desktop/lemin_3009/Lem_in/maps/our_old_maps/mini_map.txt", O_RDONLY); // потом убрать
+	//lemin->fd = open("/Users/romannezgovorov/Desktop/lemin_3009/Lem_in/maps/our_old_maps/mini_map.txt", O_RDONLY); // потом убрать
 	lemin->str = NULL;
 	return(1);
+}
+
+int	check_num(char *s, int *n)
+{
+	int				i;
+	char			*num;
+
+	if (!*s || !((*s >= '0' && *s <= '9') || *s == '-' || *s == '+'))
+		return (0);
+	*n = ft_atoi(s);
+	i = (*s == '-' || *s == '+') ? 0 : -1;
+	while (s[++i] == '0')
+		;
+	if (!(num = ft_itoa(*n)) ||
+		(*s == '-' && ft_strncmp(num + 1, s + i, ft_strlen(num) - 1)) ||
+		(*s != '-' && ft_strncmp(num, s + (*n ? i : i - 1), ft_strlen(num))) ||
+		(*s == '-' && !*n))
+	{
+		num ? free(num) : 0;
+		return (0);
+	}
+	i += (*n ? ft_strlen(num) : 0) - (*s == '-' ? 1 : 0);
+	free(num);
+	return (i);
 }
 
 int ft_parse_ants(t_lemin *lemin)
 {
 	char    *line;
 
-	if (get_next_line(lemin->fd, &line) != 1)
-		return(0);
+	if (get_next_line(lemin->fd, &line) != 1 || !(ft_strlen(line)))
+	{
+		ft_strdel(&line);
+		return (0);
+	}
 	lemin->ant_st = ft_atoi(line);
+	if (!(check_num(line, &lemin->ant_st)))
+	{
+		ft_strdel(&line);
+		return (0);
+	}
 	if (lemin->ant_st <= 0)
 	{
 		ft_strdel(&line);
@@ -100,7 +132,7 @@ int ft_parse_rooms(t_lemin *lemin)
 			ft_addroom(lemin, room);
 			type = 2;
 		} // добавить валидацию по типу ТОЖЕ НЕ ПОНЯЛА
-		if (get_next_line(lemin->fd, &line) != 1)
+		if (!get_next_line(lemin->fd, &line))
 			return(0);
 		ft_add_str(lemin->str, line);
 	}
