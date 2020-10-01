@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void	ft_add_link(t_lemin *lemin, t_link *link)
+void		ft_add_link(t_lemin *lemin, t_link *link)
 {
 	t_link	*tmp;
 
@@ -27,12 +27,12 @@ void	ft_add_link(t_lemin *lemin, t_link *link)
 		lemin->links = link;
 }
 
-t_link  *ft_init_link(t_room *start, t_room *end)
+t_link		*ft_init_link(t_room *start, t_room *end)
 {
 	t_link	*link;
 
 	if (!(link = (t_link *)ft_memalloc(sizeof(t_link))))
-	    exit(1);
+		exit(1);
 	link->start = start;
 	link->end = end;
 	link->next = NULL;
@@ -40,7 +40,7 @@ t_link  *ft_init_link(t_room *start, t_room *end)
 	return (link);
 }
 
-t_room	*ft_search(t_lemin *lemin, char *name)
+t_room		*ft_search(t_lemin *lemin, char *name)
 {
 	t_room	*tmp;
 
@@ -54,9 +54,9 @@ t_room	*ft_search(t_lemin *lemin, char *name)
 	return (NULL);
 }
 
-t_link  *ft_link(t_lemin *lemin, char *line)
+t_link		*ft_link(t_lemin *lemin, char *line)
 {
-    char	*hyphen;
+	char	*hyphen;
 	char	*st_name;
 	char	*end_name;
 	t_room	*start_room;
@@ -86,23 +86,23 @@ t_link  *ft_link(t_lemin *lemin, char *line)
 	return (ft_init_link(start_room, end_room));
 }
 
-int check_all(t_lemin *lemin)
+int			check_all(t_lemin *lemin)
 {
-    t_link *tmp_link;
-    t_room *tmp_room;
+	t_link	*tmp_link;
+	t_room	*tmp_room;
 
-    tmp_link = lemin->links;
-    tmp_room = lemin->rooms;
-    while(tmp_room)
-    {
-        while(tmp_link)
-        {
-            if (!(ft_strcmp(tmp_room->name, tmp_link->start->name)) ||
-            !(ft_strcmp(tmp_room->name, tmp_link->end->name)))
-                break;
-            else
-            {
-                if (tmp_link->next == NULL)
+	tmp_link = lemin->links;
+	tmp_room = lemin->rooms;
+	while(tmp_room)
+	{
+		while(tmp_link)
+		{
+			if (!(ft_strcmp(tmp_room->name, tmp_link->start->name)) ||
+			!(ft_strcmp(tmp_room->name, tmp_link->end->name)))
+				break;
+			else
+			{
+				if (tmp_link->next == NULL)
                     return (0);
                 tmp_link = tmp_link->next;
             }

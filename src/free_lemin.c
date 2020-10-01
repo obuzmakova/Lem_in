@@ -12,22 +12,7 @@
 
 #include "lemin.h"
 
-void	free_steps(t_step	**steps)
-{
-	t_step	*tmp;
-
-	if (steps)
-	{
-		while ((*steps))
-		{
-			tmp = (*steps);
-			(*steps) = (*steps)->next;
-			free(tmp);
-		}
-	}
-}
-
-void	free_links(t_link	**links)
+void		free_links(t_link **links)
 {
 	t_link	*tmp;
 
@@ -42,7 +27,7 @@ void	free_links(t_link	**links)
 	}
 }
 
-void	free_rooms(t_room	**rooms)
+void		free_rooms(t_room **rooms)
 {
 	t_room	*tmp;
 
@@ -58,7 +43,7 @@ void	free_rooms(t_room	**rooms)
 	}
 }
 
-void	free_ways(t_way	**ways)
+void		free_ways(t_way **ways)
 {
 	t_way	*tmp;
 
@@ -74,7 +59,7 @@ void	free_ways(t_way	**ways)
 	}
 }
 
-void	free_str(t_line	**str)
+void		free_str(t_line **str)
 {
 	t_line	*tmp;
 	t_line	*line;
@@ -90,7 +75,7 @@ void	free_str(t_line	**str)
 	(*str) = NULL;
 }
 
-void	free_lemin(t_lemin **lemin)
+void		free_lemin(t_lemin **lemin)
 {
 	if (lemin && *lemin)
 	{
@@ -99,7 +84,7 @@ void	free_lemin(t_lemin **lemin)
 		free_links(&((*lemin)->links));
 		free_rooms(&((*lemin)->rooms));
 		if (&((*lemin)->line))
-			free(((*lemin)->line)); //???
+			free(((*lemin)->line));
 		free_str(&((*lemin)->str));
 		free((*lemin));
 		(*lemin) = NULL;

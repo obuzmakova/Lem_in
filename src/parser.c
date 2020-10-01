@@ -12,40 +12,10 @@
 
 #include "lemin.h"
 
-int     ft_type(char *line)
+int			check_num(char *s, int *n)
 {
-	if (!ft_strcmp(line, "##start"))
-		return (1);
-	if (!ft_strcmp(line, "##end"))
-		return (3);
-	return (0);
-}
-
-int ft_init_lemin(t_lemin *lemin)
-{
-	lemin->ant_num = 0;
-	lemin->line = NULL;
-	lemin->rooms = NULL;
-	lemin->start = NULL;
-	lemin->end = NULL;
-	lemin->ant_st = 0;
-	lemin->ant_end = 0;
-	lemin->links = NULL;
-	lemin->max_bfs = 0;
-	lemin->ways = NULL;
-	lemin->steps = NULL;
-	//t_ant		*ants;
-	lemin->line = NULL;
-	lemin->fd = 0;
-	//lemin->fd = open("/Users/romannezgovorov/Desktop/lemin_3009/Lem_in/maps/our_old_maps/mini_map.txt", O_RDONLY); // потом убрать
-	lemin->str = NULL;
-	return(1);
-}
-
-int	check_num(char *s, int *n)
-{
-	int				i;
-	char			*num;
+	int		i;
+	char	*num;
 
 	if (!*s || !((*s >= '0' && *s <= '9') || *s == '-' || *s == '+'))
 		return (0);
@@ -66,9 +36,9 @@ int	check_num(char *s, int *n)
 	return (i);
 }
 
-int ft_parse_ants(t_lemin *lemin)
+int			ft_parse_ants(t_lemin *lemin)
 {
-	char    *line;
+	char	*line;
 
 	if (get_next_line(lemin->fd, &line) != 1 || !(ft_strlen(line)))
 	{
@@ -87,7 +57,7 @@ int ft_parse_ants(t_lemin *lemin)
 		return (0);
 	}
 	if (!(lemin->str = (t_line*)ft_memalloc(sizeof(t_line))))
-    	{
+	{
 		ft_strdel(&line);
 		return (0);
 	}
@@ -99,52 +69,41 @@ int ft_parse_ants(t_lemin *lemin)
 	lemin->str->next = NULL;
 	ft_strdel(&line);
 	return (1);
-	//ft_add_str(tmp_str, line); // НАВЕРНОЕ ЭТО МОЖНО УДАЛИТЬ УЖЕ?
 }
 
-void    ft_add_str(t_line *str, char *line)
+int			ft_parse_rooms(t_lemin *lemin)
 {
-	while(str && str->next)
-		str = str->next;
-	if (!(str->next = (t_line *)ft_memalloc(sizeof(t_line))))
-		exit(1);
-	str->next->cont = line;
-	str->next->next = NULL;
-}
-
-int ft_parse_rooms(t_lemin *lemin)
-{
-	char    *line;
-	int     type; // 1 - start, 2 - middle, 3 - end, 0 - невалидный случай
-	t_room  *room;
+	char	*line;
+	int		type;
+	t_room	*room;
 
 	if (get_next_line(lemin->fd, &line) != 1)
-		return(0);
+		return (0);
 	ft_add_str(lemin->str, line);
 	type = 2;
-	while (line && (ft_is_cmt(line, lemin) || ft_is_cmd(line) || ft_is_room(line)))
+	while (line && (ft_is_cmt(line, lemin)
+	|| ft_is_cmd(line) || ft_is_room(line)))
 	{
 		if (ft_is_cmd(line))
-			type = ft_type(line); // добавить какую-нибудь валидацию? на 0? НОЛЬ В КАЧЕСТВЕ ЧЕГО?
+			type = ft_type(line);
 		else if (ft_is_room(line))
 		{
-			room = ft_room(line, type); // добавить валидацию комнаты А ИМЕННО? ВРОДЕ ВСЕ ОК ТЕПЕРЬ?
+			room = ft_room(line, type);
 			ft_addroom(lemin, room);
 			type = 2;
-		} // добавить валидацию по типу ТОЖЕ НЕ ПОНЯЛА
+		}
 		if (!get_next_line(lemin->fd, &line))
-			return(0);
+			return (0);
 		ft_add_str(lemin->str, line);
 	}
 	if (!(lemin->line = ft_strdup(line)))
-		return(0);
+		return (0);
 	if (!ft_strchr(line, '-'))
-		return(0);
-	//ft_strdel(&line);
+		return (0);
 	return (1);
 }
 
-int valid_start_end(t_lemin *lemin)
+int			valid_start_end(t_lemin *lemin)
 {
 	if (lemin->start && lemin->end)
 	{
@@ -153,20 +112,19 @@ int valid_start_end(t_lemin *lemin)
 	}
 	else
 		return (0);
-	return(1);
+	return (1);
 }
 
-int ft_parser(t_lemin *lemin)
+int			ft_parser(t_lemin *lemin)
 {
 	ft_init_lemin(lemin);
 	if (!ft_parse_ants(lemin))
 		ft_error(lemin);
 	if (!ft_parse_rooms(lemin))
 		ft_error(lemin);
-	if(!valid_start_end(lemin))
+	if (!valid_start_end(lemin))
 		ft_error(lemin);
 	if (!ft_parse_lin(lemin))
 		ft_error(lemin);
-	// валидация по наличию связей ЧЕКНИ, ПЛИЗ, СДЕЛАЛА ЛИ Я ТО ЧТО ТЫ ИМЕЛА ТУТ ВВИДУ
 	return (1);
 }
