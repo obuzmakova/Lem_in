@@ -46,22 +46,9 @@ int			ft_parse_ants(t_lemin *lemin)
 		return (0);
 	}
 	lemin->ant_st = ft_atoi(line);
-	if (!(check_num(line, &lemin->ant_st)))
-	{
-		ft_strdel(&line);
-		return (0);
-	}
-	if (lemin->ant_st <= 0)
-	{
-		ft_strdel(&line);
-		return (0);
-	}
-	if (!(lemin->str = (t_line*)ft_memalloc(sizeof(t_line))))
-	{
-		ft_strdel(&line);
-		return (0);
-	}
-	if (!(lemin->str->cont = ft_strdup(line)))
+	if (!(check_num(line, &lemin->ant_st)) || lemin->ant_st <= 0
+	|| !(lemin->str = (t_line*)ft_memalloc(sizeof(t_line)))
+	|| !(lemin->str->cont = ft_strdup(line)))
 	{
 		ft_strdel(&line);
 		return (0);
@@ -81,8 +68,7 @@ int			ft_parse_rooms(t_lemin *lemin)
 		return (0);
 	ft_add_str(lemin->str, line);
 	type = 2;
-	while (line && (ft_is_cmt(line, lemin)
-	|| ft_is_cmd(line) || ft_is_room(line)))
+	while (line && ft_valid_str(line, lemin))
 	{
 		if (ft_is_cmd(line))
 			type = ft_type(line);
@@ -92,13 +78,11 @@ int			ft_parse_rooms(t_lemin *lemin)
 			ft_addroom(lemin, room);
 			type = 2;
 		}
-		if (!get_next_line(lemin->fd, &line))
+		if (get_next_line(lemin->fd, &line) != 1)
 			return (0);
 		ft_add_str(lemin->str, line);
 	}
-	if (!(lemin->line = ft_strdup(line)))
-		return (0);
-	if (!ft_strchr(line, '-'))
+	if (!(lemin->line = ft_strdup(line)) || !ft_strchr(line, '-'))
 		return (0);
 	return (1);
 }

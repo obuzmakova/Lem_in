@@ -16,7 +16,8 @@ HEADER_NAME = lemin.h
 
 SRC_NAME = bfs.c connect_1.c connect_2.c del_waste_input_links.c \
 	del_waste_output_links.c launch_ant_1.c launch_ant_2.c lemin.c parser.c \
-	parser_help.c parser_links.c parser_room.c print.c ways.c free_lemin.c
+	parser_help.c parser_links.c parser_room.c print.c ways.c free_lemin.c \
+	parser_help_2.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

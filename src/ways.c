@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void    add_way(t_lemin *lemin, t_way *way)
+void		add_way(t_lemin *lemin, t_way *way)
 {
 	t_way	*prev;
 	t_way	*tmp;
@@ -33,10 +33,10 @@ void    add_way(t_lemin *lemin, t_way *way)
 		way->next = tmp;
 	}
 	else
-		lemin->ways = way;   
+		lemin->ways = way;
 }
 
-void    add_link(t_way *way, t_link *link)
+void		add_link(t_way *way, t_link *link)
 {
 	t_link	*prev;
 	t_link	*tmp;
@@ -55,22 +55,22 @@ void    add_link(t_way *way, t_link *link)
 	}
 	else
 		way->link = link;
-	way->len++;    
+	way->len++;
 }
 
-t_way	*create_way(void)
+t_way		*create_way(void)
 {
 	t_way	*way;
 
 	if (!(way = (t_way *)ft_memalloc(sizeof(t_way))))
-	    exit(1);
+		exit(1);
 	way->link = NULL;
 	way->len = 0;
-	way->next= NULL;
+	way->next = NULL;
 	return (way);
 }
 
-void	del_one_link(t_lemin *lemin, t_link *link)
+void		del_one_link(t_lemin *lemin, t_link *link)
 {
 	t_link	*prev;
 	t_link	*tmp;
@@ -86,26 +86,26 @@ void	del_one_link(t_lemin *lemin, t_link *link)
 		lemin->links = tmp->next;
 	else if (tmp)
 		prev->next = tmp->next;
-    link->next = NULL;
+	link->next = NULL;
 }
 
-void    ways(t_lemin *lemin)
+void		ways(t_lemin *lemin)
 {
-    t_way   *way;
-    t_link  *link;
+	t_way	*way;
+	t_link	*link;
 
-    while (lemin->links)
-    {
-        way = create_way();
-        link = search_link(lemin, lemin->start, NULL);
-        del_one_link(lemin, link);
-        add_link(way, link);
-        while (link->end != lemin->end)
-        {
-            link = search_link(lemin, link->end, NULL);
-            del_one_link(lemin, link);
-            add_link(way, link);
-        }
-        add_way(lemin, way);
-    }
+	while (lemin->links)
+	{
+		way = create_way();
+		link = search_link(lemin, lemin->start, NULL);
+		del_one_link(lemin, link);
+		add_link(way, link);
+		while (link->end != lemin->end)
+		{
+			link = search_link(lemin, link->end, NULL);
+			del_one_link(lemin, link);
+			add_link(way, link);
+		}
+		add_way(lemin, way);
+	}
 }

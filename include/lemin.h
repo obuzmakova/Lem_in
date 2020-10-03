@@ -76,6 +76,9 @@ typedef struct			s_tail
 	struct s_tail		*next;
 }						t_tail;
 
+int						link_help(t_lemin *lemin, t_link *link, char *line);
+int						ft_valid_str(char *line, t_lemin *lemin);
+int						ft_type(char *line);
 void					free_ways(t_way	**ways);
 void					free_rooms(t_room	**rooms);
 void					free_links(t_link	**links);
